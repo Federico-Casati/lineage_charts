@@ -88,7 +88,7 @@
                   
 
                   // parsing and collecting nodes and edges from the python
-                  nodes = new vis.DataSet([{"color": "#e74c3c", "font": {"color": "#333333", "size": 10}, "id": "risk.var.rp", "label": "risk.var.rp", "shape": "dot", "size": 24, "title": "Name: risk.var.rp\nType: Processed Table"}, {"color": "#e74c3c", "font": {"color": "#333333", "size": 10}, "id": "risk.var.ibor", "label": "risk.var.ibor", "shape": "dot", "size": 24, "title": "Name: risk.var.ibor\nType: Processed Table"}, {"color": "#2ecc71", "font": {"color": "#333333", "size": 10}, "id": "VaR - Reference Portfolio", "label": "VaR - Reference P...", "shape": "dot", "size": 28, "title": "Name: VaR - Reference Portfolio\nType: Tableau Workbook"}]);
+                  nodes = new vis.DataSet([{"color": "#e74c3c", "font": {"color": "#333333", "size": 10}, "id": "risk.var.rp", "label": "risk.var.rp", "shape": "dot", "size": 24, "title": "Name: risk.var.rp\nType: Catalog processed table"}, {"color": "#e74c3c", "font": {"color": "#333333", "size": 10}, "id": "risk.var.ibor", "label": "risk.var.ibor", "shape": "dot", "size": 24, "title": "Name: risk.var.ibor\nType: Catalog processed table"}, {"color": "#2ecc71", "font": {"color": "#333333", "size": 10}, "id": "VaR - Reference Portfolio", "label": "VaR - Reference P...", "shape": "dot", "size": 28, "title": "Name: VaR - Reference Portfolio\nType: Tableau workbook"}]);
                   edges = new vis.DataSet([{"arrows": "to", "from": "risk.var.rp", "to": "VaR - Reference Portfolio"}, {"arrows": "to", "from": "risk.var.ibor", "to": "VaR - Reference Portfolio"}]);
 
                   nodeColors = {};
@@ -138,7 +138,7 @@
             max-width: 200px;
         ">
             <div style="font-weight: bold; font-size: 12px; margin-bottom: 5px; color: #555;">Node Types</div>
-            <div style="display: flex; align-items: center; margin: 2px 0;"><div style="width: 12px; height: 12px; background-color: #e74c3c; border-radius: 50%; margin-right: 6px; border: 1px solid #ccc;"></div><span style="font-size: 11px; color: #333;">Processed Table</span></div><div style="display: flex; align-items: center; margin: 2px 0;"><div style="width: 12px; height: 12px; background-color: #2ecc71; border-radius: 50%; margin-right: 6px; border: 1px solid #ccc;"></div><span style="font-size: 11px; color: #333;">Tableau Workbook</span></div>
+            <div style="display: flex; align-items: center; margin: 2px 0;"><div style="width: 12px; height: 12px; background-color: #e74c3c; border-radius: 50%; margin-right: 6px; border: 1px solid #ccc;"></div><span style="font-size: 11px; color: #333;">Catalog processed table</span></div><div style="display: flex; align-items: center; margin: 2px 0;"><div style="width: 12px; height: 12px; background-color: #2ecc71; border-radius: 50%; margin-right: 6px; border: 1px solid #ccc;"></div><span style="font-size: 11px; color: #333;">Tableau workbook</span></div>
         </div>
         
         <script>
@@ -151,7 +151,7 @@
                     legend.id = 'legend';
                     legend.innerHTML = `
                         <div style="font-weight: bold; font-size: 12px; margin-bottom: 5px; color: #555;">Node Types</div>
-                        <div style="display: flex; align-items: center; margin: 2px 0;"><div style="width: 12px; height: 12px; background-color: #e74c3c; border-radius: 50%; margin-right: 6px; border: 1px solid #ccc;"></div><span style="font-size: 11px; color: #333;">Processed Table</span></div><div style="display: flex; align-items: center; margin: 2px 0;"><div style="width: 12px; height: 12px; background-color: #2ecc71; border-radius: 50%; margin-right: 6px; border: 1px solid #ccc;"></div><span style="font-size: 11px; color: #333;">Tableau Workbook</span></div>
+                        <div style="display: flex; align-items: center; margin: 2px 0;"><div style="width: 12px; height: 12px; background-color: #e74c3c; border-radius: 50%; margin-right: 6px; border: 1px solid #ccc;"></div><span style="font-size: 11px; color: #333;">Catalog processed table</span></div><div style="display: flex; align-items: center; margin: 2px 0;"><div style="width: 12px; height: 12px; background-color: #2ecc71; border-radius: 50%; margin-right: 6px; border: 1px solid #ccc;"></div><span style="font-size: 11px; color: #333;">Tableau workbook</span></div>
                     `;
                     legend.style.cssText = `
                         position: fixed;

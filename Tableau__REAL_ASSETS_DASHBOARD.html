@@ -88,7 +88,7 @@
                   
 
                   // parsing and collecting nodes and edges from the python
-                  nodes = new vis.DataSet([{"color": "#f1c40f", "font": {"color": "#333333", "size": 10}, "id": "[textscan].REAL_ASSETS_DATAFILE.csv.REAL_ASSETS_DATAFILE.csv", "label": "[textscan].REAL_A...", "shape": "dot", "size": 24, "title": "Name: [textscan].REAL_ASSETS_DATAFILE.csv.REAL_ASSETS_DATAFILE.csv\nType: CSV File"}, {"color": "#2ecc71", "font": {"color": "#333333", "size": 10}, "id": "REAL_ASSETS_DASHBOARD", "label": "REAL_ASSETS_DASHB...", "shape": "dot", "size": 24, "title": "Name: REAL_ASSETS_DASHBOARD\nType: Tableau Workbook"}]);
+                  nodes = new vis.DataSet([{"color": "#f1c40f", "font": {"color": "#333333", "size": 10}, "id": "[textscan].REAL_ASSETS_DATAFILE.csv.REAL_ASSETS_DATAFILE.csv", "label": "[textscan].REAL_A...", "shape": "dot", "size": 24, "title": "Name: [textscan].REAL_ASSETS_DATAFILE.csv.REAL_ASSETS_DATAFILE.csv\nType: CSV"}, {"color": "#2ecc71", "font": {"color": "#333333", "size": 10}, "id": "REAL_ASSETS_DASHBOARD", "label": "REAL_ASSETS_DASHB...", "shape": "dot", "size": 24, "title": "Name: REAL_ASSETS_DASHBOARD\nType: Tableau workbook"}]);
                   edges = new vis.DataSet([{"arrows": "to", "from": "[textscan].REAL_ASSETS_DATAFILE.csv.REAL_ASSETS_DATAFILE.csv", "to": "REAL_ASSETS_DASHBOARD"}]);
 
                   nodeColors = {};
@@ -138,7 +138,7 @@
             max-width: 200px;
         ">
             <div style="font-weight: bold; font-size: 12px; margin-bottom: 5px; color: #555;">Node Types</div>
-            <div style="display: flex; align-items: center; margin: 2px 0;"><div style="width: 12px; height: 12px; background-color: #f1c40f; border-radius: 50%; margin-right: 6px; border: 1px solid #ccc;"></div><span style="font-size: 11px; color: #333;">CSV File</span></div><div style="display: flex; align-items: center; margin: 2px 0;"><div style="width: 12px; height: 12px; background-color: #2ecc71; border-radius: 50%; margin-right: 6px; border: 1px solid #ccc;"></div><span style="font-size: 11px; color: #333;">Tableau Workbook</span></div>
+            <div style="display: flex; align-items: center; margin: 2px 0;"><div style="width: 12px; height: 12px; background-color: #f1c40f; border-radius: 50%; margin-right: 6px; border: 1px solid #ccc;"></div><span style="font-size: 11px; color: #333;">CSV</span></div><div style="display: flex; align-items: center; margin: 2px 0;"><div style="width: 12px; height: 12px; background-color: #2ecc71; border-radius: 50%; margin-right: 6px; border: 1px solid #ccc;"></div><span style="font-size: 11px; color: #333;">Tableau workbook</span></div>
         </div>
         
         <script>
@@ -151,7 +151,7 @@
                     legend.id = 'legend';
                     legend.innerHTML = `
                         <div style="font-weight: bold; font-size: 12px; margin-bottom: 5px; color: #555;">Node Types</div>
-                        <div style="display: flex; align-items: center; margin: 2px 0;"><div style="width: 12px; height: 12px; background-color: #f1c40f; border-radius: 50%; margin-right: 6px; border: 1px solid #ccc;"></div><span style="font-size: 11px; color: #333;">CSV File</span></div><div style="display: flex; align-items: center; margin: 2px 0;"><div style="width: 12px; height: 12px; background-color: #2ecc71; border-radius: 50%; margin-right: 6px; border: 1px solid #ccc;"></div><span style="font-size: 11px; color: #333;">Tableau Workbook</span></div>
+                        <div style="display: flex; align-items: center; margin: 2px 0;"><div style="width: 12px; height: 12px; background-color: #f1c40f; border-radius: 50%; margin-right: 6px; border: 1px solid #ccc;"></div><span style="font-size: 11px; color: #333;">CSV</span></div><div style="display: flex; align-items: center; margin: 2px 0;"><div style="width: 12px; height: 12px; background-color: #2ecc71; border-radius: 50%; margin-right: 6px; border: 1px solid #ccc;"></div><span style="font-size: 11px; color: #333;">Tableau workbook</span></div>
                     `;
                     legend.style.cssText = `
                         position: fixed;
