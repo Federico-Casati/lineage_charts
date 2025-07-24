@@ -1,0 +1,187 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 850px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#1F4270", "font": {"color": "#333333", "size": 10}, "id": "caissa.fx.caissa_fx_usd_zar_raw", "label": "caissa.fx.caissa_...", "shape": "dot", "size": 28, "title": "Name: caissa.fx.caissa_fx_usd_zar_raw\nType: Catalog raw table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#5dade2", "font": {"color": "#333333", "size": 10}, "id": "caissa_USD_JPY", "label": "caissa_USD_JPY", "shape": "dot", "size": 24, "title": "Name: caissa_USD_JPY\nType: ADLS delta table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#1F4270", "font": {"color": "#333333", "size": 10}, "id": "jpm.nav_reconciliation.aah_funds_export", "label": "jpm.nav_reconcili...", "shape": "dot", "size": 32, "title": "Name: jpm.nav_reconciliation.aah_funds_export\nType: Catalog raw table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#5dade2", "font": {"color": "#333333", "size": 10}, "id": "burgiss_valuations", "label": "burgiss_valuations", "shape": "dot", "size": 24, "title": "Name: burgiss_valuations\nType: ADLS delta table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#c0c0c0", "font": {"color": "#333333", "size": 10}, "id": "jpm.nav_reconciliation.daily_caissa_fx", "label": "jpm.nav_reconcili...", "shape": "dot", "size": 32, "title": "Name: jpm.nav_reconciliation.daily_caissa_fx\nType: Catalog processed table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#c0c0c0", "font": {"color": "#333333", "size": 10}, "id": "caissa.fx.caissa_fx_daily_clean", "label": "caissa.fx.caissa_...", "shape": "dot", "size": 50, "title": "Name: caissa.fx.caissa_fx_daily_clean\nType: Catalog processed table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#5dade2", "font": {"color": "#333333", "size": 10}, "id": "caissa_USD_EUR", "label": "caissa_USD_EUR", "shape": "dot", "size": 24, "title": "Name: caissa_USD_EUR\nType: ADLS delta table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#5dade2", "font": {"color": "#333333", "size": 10}, "id": "caissa_USD_UGX", "label": "caissa_USD_UGX", "shape": "dot", "size": 24, "title": "Name: caissa_USD_UGX\nType: ADLS delta table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#1F4270", "font": {"color": "#333333", "size": 10}, "id": "caissa.fx.caissa_fx_usd_jpy_raw", "label": "caissa.fx.caissa_...", "shape": "dot", "size": 28, "title": "Name: caissa.fx.caissa_fx_usd_jpy_raw\nType: Catalog raw table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#c0c0c0", "font": {"color": "#333333", "size": 10}, "id": "jpm.nav_reconciliation.nav_reconciliation_private", "label": "jpm.nav_reconcili...", "shape": "dot", "size": 44, "title": "Name: jpm.nav_reconciliation.nav_reconciliation_private\nType: Catalog processed table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#5dade2", "font": {"color": "#333333", "size": 10}, "id": "caissa_USD_GBP", "label": "caissa_USD_GBP", "shape": "dot", "size": 24, "title": "Name: caissa_USD_GBP\nType: ADLS delta table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#1F4270", "font": {"color": "#333333", "size": 10}, "id": "caissa.fx.caissa_fx_usd_ugx_raw", "label": "caissa.fx.caissa_...", "shape": "dot", "size": 28, "title": "Name: caissa.fx.caissa_fx_usd_ugx_raw\nType: Catalog raw table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#1F4270", "font": {"color": "#333333", "size": 10}, "id": "caissa.fx.caissa_fx_usd_chf_raw", "label": "caissa.fx.caissa_...", "shape": "dot", "size": 28, "title": "Name: caissa.fx.caissa_fx_usd_chf_raw\nType: Catalog raw table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#1F4270", "font": {"color": "#333333", "size": 10}, "id": "jpm.nav_reconciliation.caissa_portfolio_holdings_raw", "label": "jpm.nav_reconcili...", "shape": "dot", "size": 28, "title": "Name: jpm.nav_reconciliation.caissa_portfolio_holdings_raw\nType: Catalog raw table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#c0c0c0", "font": {"color": "#333333", "size": 10}, "id": "jpm.nav_reconciliation.portfolio_master_funds", "label": "jpm.nav_reconcili...", "shape": "dot", "size": 40, "title": "Name: jpm.nav_reconciliation.portfolio_master_funds\nType: Catalog processed table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#c0c0c0", "font": {"color": "#333333", "size": 10}, "id": "jpm.nav_reconciliation.nav_reconciliation_fx", "label": "jpm.nav_reconcili...", "shape": "dot", "size": 32, "title": "Name: jpm.nav_reconciliation.nav_reconciliation_fx\nType: Catalog processed table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#1F4270", "font": {"color": "#333333", "size": 10}, "id": "caissa.fx.caissa_fx_usd_czk_raw", "label": "caissa.fx.caissa_...", "shape": "dot", "size": 28, "title": "Name: caissa.fx.caissa_fx_usd_czk_raw\nType: Catalog raw table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#5dade2", "font": {"color": "#333333", "size": 10}, "id": "caissa_USD_CZK", "label": "caissa_USD_CZK", "shape": "dot", "size": 24, "title": "Name: caissa_USD_CZK\nType: ADLS delta table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#1F4270", "font": {"color": "#333333", "size": 10}, "id": "caissa.fx.caissa_fx_usd_eur_raw", "label": "caissa.fx.caissa_...", "shape": "dot", "size": 28, "title": "Name: caissa.fx.caissa_fx_usd_eur_raw\nType: Catalog raw table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#c0c0c0", "font": {"color": "#333333", "size": 10}, "id": "jpm.nav_reconciliation.nav_reconciliation_cash", "label": "jpm.nav_reconcili...", "shape": "dot", "size": 32, "title": "Name: jpm.nav_reconciliation.nav_reconciliation_cash\nType: Catalog processed table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#5dade2", "font": {"color": "#333333", "size": 10}, "id": "caissa_USD_SEK", "label": "caissa_USD_SEK", "shape": "dot", "size": 24, "title": "Name: caissa_USD_SEK\nType: ADLS delta table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#c0c0c0", "font": {"color": "#333333", "size": 10}, "id": "jpm.nav_reconciliation.nav_reconciliation_other", "label": "jpm.nav_reconcili...", "shape": "dot", "size": 36, "title": "Name: jpm.nav_reconciliation.nav_reconciliation_other\nType: Catalog processed table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#5dade2", "font": {"color": "#333333", "size": 10}, "id": "caissa_accounting_history", "label": "caissa_accounting...", "shape": "dot", "size": 24, "title": "Name: caissa_accounting_history\nType: ADLS delta table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#5dade2", "font": {"color": "#333333", "size": 10}, "id": "caissa_USD_ZAR", "label": "caissa_USD_ZAR", "shape": "dot", "size": 24, "title": "Name: caissa_USD_ZAR\nType: ADLS delta table\nStatus: Normal"}, {"borderWidth": 4, "borderWidthSelected": 5, "chosen": {"node": true}, "color": {"background": "#5dade2", "border": "#ff0000"}, "font": {"color": "#333333", "size": 10}, "id": "caissa_all_funds_export", "label": "\ud83d\udea8 caissa_all_funds_...", "shape": "dot", "size": 31.200000000000003, "title": "\ud83d\udea8 IMPACTED NODE\nName: caissa_all_funds_export\nType: ADLS delta table\nValidations: 1, Rules: 1\nDate: 2025-07-24"}, {"borderWidth": 4, "borderWidthSelected": 5, "chosen": {"node": true}, "color": {"background": "#5dade2", "border": "#ff0000"}, "font": {"color": "#333333", "size": 10}, "id": "caissa_portfolio_holdings", "label": "\ud83d\udea8 caissa_portfolio_...", "shape": "dot", "size": 31.200000000000003, "title": "\ud83d\udea8 IMPACTED NODE\nName: caissa_portfolio_holdings\nType: ADLS delta table\nValidations: 1, Rules: 1\nDate: 2025-07-24"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#1F4270", "font": {"color": "#333333", "size": 10}, "id": "caissa.fx.caissa_fx_usd_sek_raw", "label": "caissa.fx.caissa_...", "shape": "dot", "size": 28, "title": "Name: caissa.fx.caissa_fx_usd_sek_raw\nType: Catalog raw table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#1F4270", "font": {"color": "#333333", "size": 10}, "id": "jpm.nav_reconciliation.caissa_accounting_history_raw", "label": "jpm.nav_reconcili...", "shape": "dot", "size": 28, "title": "Name: jpm.nav_reconciliation.caissa_accounting_history_raw\nType: Catalog raw table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#1F4270", "font": {"color": "#333333", "size": 10}, "id": "jpm.nav_reconciliation.jpm_detailed_monthly_nav_raw", "label": "jpm.nav_reconcili...", "shape": "dot", "size": 44, "title": "Name: jpm.nav_reconciliation.jpm_detailed_monthly_nav_raw\nType: Catalog raw table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#c0c0c0", "font": {"color": "#333333", "size": 10}, "id": "jpm.nav_reconciliation.nav_reconciliation_shares", "label": "jpm.nav_reconcili...", "shape": "dot", "size": 40, "title": "Name: jpm.nav_reconciliation.nav_reconciliation_shares\nType: Catalog processed table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#5dade2", "font": {"color": "#333333", "size": 10}, "id": "jpm_detailed_monthly_nav", "label": "jpm_detailed_mont...", "shape": "dot", "size": 24, "title": "Name: jpm_detailed_monthly_nav\nType: ADLS delta table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#c0c0c0", "font": {"color": "#333333", "size": 10}, "id": "aah_report.mapping_tables.portfolio_master_funds", "label": "aah_report.mappin...", "shape": "dot", "size": 24, "title": "Name: aah_report.mapping_tables.portfolio_master_funds\nType: Catalog processed table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#1F4270", "font": {"color": "#333333", "size": 10}, "id": "jpm.nav_reconciliation.burgiss_valuations_raw", "label": "jpm.nav_reconcili...", "shape": "dot", "size": 28, "title": "Name: jpm.nav_reconciliation.burgiss_valuations_raw\nType: Catalog raw table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#1F4270", "font": {"color": "#333333", "size": 10}, "id": "caissa.fx.caissa_fx_usd_gbp_raw", "label": "caissa.fx.caissa_...", "shape": "dot", "size": 28, "title": "Name: caissa.fx.caissa_fx_usd_gbp_raw\nType: Catalog raw table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#5dade2", "font": {"color": "#333333", "size": 10}, "id": "caissa_USD_CHF", "label": "caissa_USD_CHF", "shape": "dot", "size": 24, "title": "Name: caissa_USD_CHF\nType: ADLS delta table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#2ecc71", "font": {"color": "#333333", "size": 10}, "id": "/Workspace/Shared/output_files/nav_reconciliation/{report_date}_nav_reconciliation.xlsx", "label": "/Workspace/Shared...", "shape": "dot", "size": 40, "title": "Name: /Workspace/Shared/output_files/nav_reconciliation/{report_date}_nav_reconciliation.xlsx\nType: Excel\nStatus: Normal"}]);
+                  edges = new vis.DataSet([{"arrows": "to", "color": "#848484", "from": "caissa.fx.caissa_fx_usd_zar_raw", "to": "caissa.fx.caissa_fx_daily_clean", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa_USD_JPY", "to": "caissa.fx.caissa_fx_usd_jpy_raw", "width": 1}, {"arrows": "to", "color": "#848484", "from": "jpm.nav_reconciliation.aah_funds_export", "to": "jpm.nav_reconciliation.nav_reconciliation_shares", "width": 1}, {"arrows": "to", "color": "#848484", "from": "jpm.nav_reconciliation.aah_funds_export", "to": "jpm.nav_reconciliation.nav_reconciliation_other", "width": 1}, {"arrows": "to", "color": "#848484", "from": "burgiss_valuations", "to": "jpm.nav_reconciliation.burgiss_valuations_raw", "width": 1}, {"arrows": "to", "color": "#848484", "from": "jpm.nav_reconciliation.daily_caissa_fx", "to": "jpm.nav_reconciliation.nav_reconciliation_private", "width": 1}, {"arrows": "to", "color": "#848484", "from": "jpm.nav_reconciliation.daily_caissa_fx", "to": "jpm.nav_reconciliation.nav_reconciliation_fx", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa.fx.caissa_fx_daily_clean", "to": "jpm.nav_reconciliation.daily_caissa_fx", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa_USD_EUR", "to": "caissa.fx.caissa_fx_usd_eur_raw", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa_USD_UGX", "to": "caissa.fx.caissa_fx_usd_ugx_raw", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa.fx.caissa_fx_usd_jpy_raw", "to": "caissa.fx.caissa_fx_daily_clean", "width": 1}, {"arrows": "to", "color": "#848484", "from": "jpm.nav_reconciliation.nav_reconciliation_private", "to": "/Workspace/Shared/output_files/nav_reconciliation/{report_date}_nav_reconciliation.xlsx", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa_USD_GBP", "to": "caissa.fx.caissa_fx_usd_gbp_raw", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa.fx.caissa_fx_usd_ugx_raw", "to": "caissa.fx.caissa_fx_daily_clean", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa.fx.caissa_fx_usd_chf_raw", "to": "caissa.fx.caissa_fx_daily_clean", "width": 1}, {"arrows": "to", "color": "#848484", "from": "jpm.nav_reconciliation.caissa_portfolio_holdings_raw", "to": "jpm.nav_reconciliation.nav_reconciliation_private", "width": 1}, {"arrows": "to", "color": "#848484", "from": "jpm.nav_reconciliation.portfolio_master_funds", "to": "jpm.nav_reconciliation.nav_reconciliation_cash", "width": 1}, {"arrows": "to", "color": "#848484", "from": "jpm.nav_reconciliation.portfolio_master_funds", "to": "jpm.nav_reconciliation.nav_reconciliation_other", "width": 1}, {"arrows": "to", "color": "#848484", "from": "jpm.nav_reconciliation.portfolio_master_funds", "to": "jpm.nav_reconciliation.nav_reconciliation_shares", "width": 1}, {"arrows": "to", "color": "#848484", "from": "jpm.nav_reconciliation.portfolio_master_funds", "to": "jpm.nav_reconciliation.nav_reconciliation_private", "width": 1}, {"arrows": "to", "color": "#848484", "from": "jpm.nav_reconciliation.nav_reconciliation_fx", "to": "/Workspace/Shared/output_files/nav_reconciliation/{report_date}_nav_reconciliation.xlsx", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa.fx.caissa_fx_usd_czk_raw", "to": "caissa.fx.caissa_fx_daily_clean", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa_USD_CZK", "to": "caissa.fx.caissa_fx_usd_czk_raw", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa.fx.caissa_fx_usd_eur_raw", "to": "caissa.fx.caissa_fx_daily_clean", "width": 1}, {"arrows": "to", "color": "#848484", "from": "jpm.nav_reconciliation.nav_reconciliation_cash", "to": "/Workspace/Shared/output_files/nav_reconciliation/{report_date}_nav_reconciliation.xlsx", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa_USD_SEK", "to": "caissa.fx.caissa_fx_usd_sek_raw", "width": 1}, {"arrows": "to", "color": "#848484", "from": "jpm.nav_reconciliation.nav_reconciliation_other", "to": "/Workspace/Shared/output_files/nav_reconciliation/{report_date}_nav_reconciliation.xlsx", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa_accounting_history", "to": "jpm.nav_reconciliation.caissa_accounting_history_raw", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa_USD_ZAR", "to": "caissa.fx.caissa_fx_usd_zar_raw", "width": 1}, {"arrows": "to", "color": "#ff6666", "from": "caissa_all_funds_export", "to": "jpm.nav_reconciliation.aah_funds_export", "width": 2}, {"arrows": "to", "color": "#ff6666", "from": "caissa_portfolio_holdings", "to": "jpm.nav_reconciliation.caissa_portfolio_holdings_raw", "width": 2}, {"arrows": "to", "color": "#848484", "from": "caissa.fx.caissa_fx_usd_sek_raw", "to": "caissa.fx.caissa_fx_daily_clean", "width": 1}, {"arrows": "to", "color": "#848484", "from": "jpm.nav_reconciliation.caissa_accounting_history_raw", "to": "jpm.nav_reconciliation.nav_reconciliation_shares", "width": 1}, {"arrows": "to", "color": "#848484", "from": "jpm.nav_reconciliation.jpm_detailed_monthly_nav_raw", "to": "jpm.nav_reconciliation.nav_reconciliation_shares", "width": 1}, {"arrows": "to", "color": "#848484", "from": "jpm.nav_reconciliation.jpm_detailed_monthly_nav_raw", "to": "jpm.nav_reconciliation.nav_reconciliation_cash", "width": 1}, {"arrows": "to", "color": "#848484", "from": "jpm.nav_reconciliation.jpm_detailed_monthly_nav_raw", "to": "jpm.nav_reconciliation.nav_reconciliation_other", "width": 1}, {"arrows": "to", "color": "#848484", "from": "jpm.nav_reconciliation.jpm_detailed_monthly_nav_raw", "to": "jpm.nav_reconciliation.nav_reconciliation_fx", "width": 1}, {"arrows": "to", "color": "#848484", "from": "jpm.nav_reconciliation.jpm_detailed_monthly_nav_raw", "to": "jpm.nav_reconciliation.nav_reconciliation_private", "width": 1}, {"arrows": "to", "color": "#848484", "from": "jpm.nav_reconciliation.nav_reconciliation_shares", "to": "/Workspace/Shared/output_files/nav_reconciliation/{report_date}_nav_reconciliation.xlsx", "width": 1}, {"arrows": "to", "color": "#848484", "from": "jpm_detailed_monthly_nav", "to": "jpm.nav_reconciliation.jpm_detailed_monthly_nav_raw", "width": 1}, {"arrows": "to", "color": "#848484", "from": "aah_report.mapping_tables.portfolio_master_funds", "to": "jpm.nav_reconciliation.portfolio_master_funds", "width": 1}, {"arrows": "to", "color": "#848484", "from": "jpm.nav_reconciliation.burgiss_valuations_raw", "to": "jpm.nav_reconciliation.nav_reconciliation_private", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa.fx.caissa_fx_usd_gbp_raw", "to": "caissa.fx.caissa_fx_daily_clean", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa_USD_CHF", "to": "caissa.fx.caissa_fx_usd_chf_raw", "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {"layout": {"hierarchical": {"enabled": true, "levelSeparation": 350, "nodeSpacing": 200, "direction": "UD", "sortMethod": "directed"}}, "physics": {"enabled": true, "hierarchicalRepulsion": {"nodeDistance": 200, "springLength": 200}}, "interaction": {"hover": true, "tooltipDelay": 200}, "nodes": {"borderWidth": 2, "borderWidthSelected": 3}, "edges": {"arrows": {"to": {"enabled": true, "scaleFactor": 1.2}}, "color": {"color": "#848484", "highlight": "#2B7CE9"}}};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    
+        <div id="legend" style="
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 8px;
+            font-family: Arial, sans-serif;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 1000;
+            max-width: 220px;
+        ">
+            
+        <div style="font-weight: bold; font-size: 12px; margin-bottom: 8px; color: #555; border-bottom: 1px solid #ddd; padding-bottom: 5px;">
+            Daily Impact Analysis<br>
+            <span style="font-size: 10px; color: #777;">
+                2025-07-24 | NAV reconciliation<br>
+                2 impacted nodes
+            </span>
+        </div>
+        
+            <div style="display: flex; align-items: center; margin: 2px 0; padding-bottom: 5px;"><div style="width: 12px; height: 12px; background-color: #ff4444; border-radius: 50%; margin-right: 6px; border: 2px solid #cc0000;"></div><span style="font-size: 11px; color: #333; font-weight: bold;">🚨 Impacted Node</span></div><div style="display: flex; align-items: center; margin: 2px 0;"><div style="width: 12px; height: 12px; background-color: #5dade2; border-radius: 50%; margin-right: 6px; border: 1px solid #ccc;"></div><span style="font-size: 11px; color: #333;">ADLS delta table</span></div><div style="display: flex; align-items: center; margin: 2px 0;"><div style="width: 12px; height: 12px; background-color: #c0c0c0; border-radius: 50%; margin-right: 6px; border: 1px solid #ccc;"></div><span style="font-size: 11px; color: #333;">Catalog processed table</span></div><div style="display: flex; align-items: center; margin: 2px 0;"><div style="width: 12px; height: 12px; background-color: #1F4270; border-radius: 50%; margin-right: 6px; border: 1px solid #ccc;"></div><span style="font-size: 11px; color: #333;">Catalog raw table</span></div><div style="display: flex; align-items: center; margin: 2px 0;"><div style="width: 12px; height: 12px; background-color: #2ecc71; border-radius: 50%; margin-right: 6px; border: 1px solid #ccc;"></div><span style="font-size: 11px; color: #333;">Excel</span></div>
+        </div>
+        
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                var networkContainer = document.getElementById('mynetworkid');
+                if (networkContainer && !document.getElementById('legend')) {
+                    var legend = document.createElement('div');
+                    legend.id = 'legend';
+                    legend.innerHTML = `
+        <div style="font-weight: bold; font-size: 12px; margin-bottom: 8px; color: #555; border-bottom: 1px solid #ddd; padding-bottom: 5px;">
+            Daily Impact Analysis<br>
+            <span style="font-size: 10px; color: #777;">
+                2025-07-24 | NAV reconciliation<br>
+                2 impacted nodes
+            </span>
+        </div>
+        <div style="display: flex; align-items: center; margin: 2px 0; padding-bottom: 5px;"><div style="width: 12px; height: 12px; background-color: #ff4444; border-radius: 50%; margin-right: 6px; border: 2px solid #cc0000;"></div><span style="font-size: 11px; color: #333; font-weight: bold;">🚨 Impacted Node</span></div><div style="display: flex; align-items: center; margin: 2px 0;"><div style="width: 12px; height: 12px; background-color: #5dade2; border-radius: 50%; margin-right: 6px; border: 1px solid #ccc;"></div><span style="font-size: 11px; color: #333;">ADLS delta table</span></div><div style="display: flex; align-items: center; margin: 2px 0;"><div style="width: 12px; height: 12px; background-color: #c0c0c0; border-radius: 50%; margin-right: 6px; border: 1px solid #ccc;"></div><span style="font-size: 11px; color: #333;">Catalog processed table</span></div><div style="display: flex; align-items: center; margin: 2px 0;"><div style="width: 12px; height: 12px; background-color: #1F4270; border-radius: 50%; margin-right: 6px; border: 1px solid #ccc;"></div><span style="font-size: 11px; color: #333;">Catalog raw table</span></div><div style="display: flex; align-items: center; margin: 2px 0;"><div style="width: 12px; height: 12px; background-color: #2ecc71; border-radius: 50%; margin-right: 6px; border: 1px solid #ccc;"></div><span style="font-size: 11px; color: #333;">Excel</span></div>`;
+                    legend.style.cssText = `
+                        position: fixed;
+                        top: 10px;
+                        right: 10px;
+                        background: rgba(255, 255, 255, 0.95);
+                        border: 1px solid #ddd;
+                        border-radius: 5px;
+                        padding: 8px;
+                        font-family: Arial, sans-serif;
+                        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                        z-index: 1000;
+                        max-width: 220px;
+                    `;
+                    document.body.appendChild(legend);
+                }
+            }, 1000);
+        });
+        </script>
+        </body>
+</html>

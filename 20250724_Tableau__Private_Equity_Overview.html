@@ -1,0 +1,187 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 850px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"borderWidth": 4, "borderWidthSelected": 5, "chosen": {"node": true}, "color": {"background": "#5dade2", "border": "#ff0000"}, "font": {"color": "#333333", "size": 10}, "id": "caissa_commitment_summary", "label": "\ud83d\udea8 caissa_commitment...", "shape": "dot", "size": 31.200000000000003, "title": "\ud83d\udea8 IMPACTED NODE\nName: caissa_commitment_summary\nType: ADLS delta table\nValidations: 1, Rules: 1\nDate: 2025-07-24"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#c0c0c0", "font": {"color": "#333333", "size": 10}, "id": "caissa.commitments.commitments_summary_investment_type_fund_info", "label": "caissa.commitment...", "shape": "dot", "size": 32, "title": "Name: caissa.commitments.commitments_summary_investment_type_fund_info\nType: Catalog processed table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#1F4270", "font": {"color": "#333333", "size": 10}, "id": "caissa.commitments.performance_overview_l1_investmenttype_l2_raw", "label": "caissa.commitment...", "shape": "dot", "size": 28, "title": "Name: caissa.commitments.performance_overview_l1_investmenttype_l2_raw\nType: Catalog raw table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#1F4270", "font": {"color": "#333333", "size": 10}, "id": "caissa.commitments.commitment_history_raw", "label": "caissa.commitment...", "shape": "dot", "size": 28, "title": "Name: caissa.commitments.commitment_history_raw\nType: Catalog raw table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#1F4270", "font": {"color": "#333333", "size": 10}, "id": "caissa.commitments.accounting_history_raw", "label": "caissa.commitment...", "shape": "dot", "size": 36, "title": "Name: caissa.commitments.accounting_history_raw\nType: Catalog raw table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#c0c0c0", "font": {"color": "#333333", "size": 10}, "id": "caissa.commitments.commitment_summary_investment_type_incl_l1_weights", "label": "caissa.commitment...", "shape": "dot", "size": 32, "title": "Name: caissa.commitments.commitment_summary_investment_type_incl_l1_weights\nType: Catalog processed table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#1F4270", "font": {"color": "#333333", "size": 10}, "id": "caissa.commitments.commitment_returns_raw", "label": "caissa.commitment...", "shape": "dot", "size": 28, "title": "Name: caissa.commitments.commitment_returns_raw\nType: Catalog raw table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#c0c0c0", "font": {"color": "#333333", "size": 10}, "id": "caissa.commitments.fund_info_contributions_distributions_clean", "label": "caissa.commitment...", "shape": "dot", "size": 28, "title": "Name: caissa.commitments.fund_info_contributions_distributions_clean\nType: Catalog processed table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#c0c0c0", "font": {"color": "#333333", "size": 10}, "id": "caissa.commitments.non_commitment_summary_investment_type", "label": "caissa.commitment...", "shape": "dot", "size": 36, "title": "Name: caissa.commitments.non_commitment_summary_investment_type\nType: Catalog processed table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#c0c0c0", "font": {"color": "#333333", "size": 10}, "id": "caissa.commitments.performance_overview_l1_investmenttype_l2_clean", "label": "caissa.commitment...", "shape": "dot", "size": 36, "title": "Name: caissa.commitments.performance_overview_l1_investmenttype_l2_clean\nType: Catalog processed table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#c0c0c0", "font": {"color": "#333333", "size": 10}, "id": "caissa.commitments.non_commitment_summary_incl_performance_investment_type", "label": "caissa.commitment...", "shape": "dot", "size": 32, "title": "Name: caissa.commitments.non_commitment_summary_incl_performance_investment_type\nType: Catalog processed table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#1F4270", "font": {"color": "#333333", "size": 10}, "id": "caissa.commitments.commitment_summary_raw", "label": "caissa.commitment...", "shape": "dot", "size": 32, "title": "Name: caissa.commitments.commitment_summary_raw\nType: Catalog raw table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#c0c0c0", "font": {"color": "#333333", "size": 10}, "id": "sharepoint.fund_info.private_equity", "label": "sharepoint.fund_i...", "shape": "dot", "size": 24, "title": "Name: sharepoint.fund_info.private_equity\nType: Catalog processed table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#c0c0c0", "font": {"color": "#333333", "size": 10}, "id": "sharepoint.fund_info.private_equity_unpivot", "label": "sharepoint.fund_i...", "shape": "dot", "size": 24, "title": "Name: sharepoint.fund_info.private_equity_unpivot\nType: Catalog processed table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#c0c0c0", "font": {"color": "#333333", "size": 10}, "id": "caissa.commitments.fund_info_irr_clean", "label": "caissa.commitment...", "shape": "dot", "size": 28, "title": "Name: caissa.commitments.fund_info_irr_clean\nType: Catalog processed table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#5dade2", "font": {"color": "#333333", "size": 10}, "id": "caissa_performance_overview_l1_investmenttype_l2", "label": "caissa_performanc...", "shape": "dot", "size": 24, "title": "Name: caissa_performance_overview_l1_investmenttype_l2\nType: ADLS delta table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#5dade2", "font": {"color": "#333333", "size": 10}, "id": "caissa_commitment_returns", "label": "caissa_commitment...", "shape": "dot", "size": 24, "title": "Name: caissa_commitment_returns\nType: ADLS delta table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#1F4270", "font": {"color": "#333333", "size": 10}, "id": "caissa.commitments.commitments_raw", "label": "caissa.commitment...", "shape": "dot", "size": 28, "title": "Name: caissa.commitments.commitments_raw\nType: Catalog raw table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#c0c0c0", "font": {"color": "#333333", "size": 10}, "id": "caissa.commitments.commitment_history_clean", "label": "caissa.commitment...", "shape": "dot", "size": 32, "title": "Name: caissa.commitments.commitment_history_clean\nType: Catalog processed table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#5dade2", "font": {"color": "#333333", "size": 10}, "id": "caissa_accounting_history", "label": "caissa_accounting...", "shape": "dot", "size": 24, "title": "Name: caissa_accounting_history\nType: ADLS delta table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#5dade2", "font": {"color": "#333333", "size": 10}, "id": "caissa_commitments", "label": "caissa_commitments", "shape": "dot", "size": 24, "title": "Name: caissa_commitments\nType: ADLS delta table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#1F4270", "font": {"color": "#333333", "size": 10}, "id": "caissa.commitments.commitment_summary_totals_investment_type_raw", "label": "caissa.commitment...", "shape": "dot", "size": 28, "title": "Name: caissa.commitments.commitment_summary_totals_investment_type_raw\nType: Catalog raw table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#c0c0c0", "font": {"color": "#333333", "size": 10}, "id": "caissa.commitments.commitment_summary_investment_type_unpivot", "label": "caissa.commitment...", "shape": "dot", "size": 32, "title": "Name: caissa.commitments.commitment_summary_investment_type_unpivot\nType: Catalog processed table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#c0c0c0", "font": {"color": "#333333", "size": 10}, "id": "caissa.commitments.fund_info_tvpi_dpi_rvpi_clean", "label": "caissa.commitment...", "shape": "dot", "size": 28, "title": "Name: caissa.commitments.fund_info_tvpi_dpi_rvpi_clean\nType: Catalog processed table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#c0c0c0", "font": {"color": "#333333", "size": 10}, "id": "caissa.commitments.portfolio_tree", "label": "caissa.commitment...", "shape": "dot", "size": 36, "title": "Name: caissa.commitments.portfolio_tree\nType: Catalog processed table\nStatus: Normal"}, {"borderWidth": 4, "borderWidthSelected": 5, "chosen": {"node": true}, "color": {"background": "#5dade2", "border": "#ff0000"}, "font": {"color": "#333333", "size": 10}, "id": "caissa_portfolio_holdings", "label": "\ud83d\udea8 caissa_portfolio_...", "shape": "dot", "size": 31.200000000000003, "title": "\ud83d\udea8 IMPACTED NODE\nName: caissa_portfolio_holdings\nType: ADLS delta table\nValidations: 1, Rules: 1\nDate: 2025-07-24"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#1F4270", "font": {"color": "#333333", "size": 10}, "id": "caissa.commitments.portfolio_holdings_raw", "label": "caissa.commitment...", "shape": "dot", "size": 32, "title": "Name: caissa.commitments.portfolio_holdings_raw\nType: Catalog raw table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#c0c0c0", "font": {"color": "#333333", "size": 10}, "id": "caissa.commitments.commitment_summary_investment_type_grouped", "label": "caissa.commitment...", "shape": "dot", "size": 40, "title": "Name: caissa.commitments.commitment_summary_investment_type_grouped\nType: Catalog processed table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#5dade2", "font": {"color": "#333333", "size": 10}, "id": "caissa_commitment_summary_totals_investment_type", "label": "caissa_commitment...", "shape": "dot", "size": 24, "title": "Name: caissa_commitment_summary_totals_investment_type\nType: ADLS delta table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#c0c0c0", "font": {"color": "#333333", "size": 10}, "id": "caissa.commitments.commitment_summary_investment_type_clean", "label": "caissa.commitment...", "shape": "dot", "size": 36, "title": "Name: caissa.commitments.commitment_summary_investment_type_clean\nType: Catalog processed table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#5dade2", "font": {"color": "#333333", "size": 10}, "id": "caissa_commitment_history", "label": "caissa_commitment...", "shape": "dot", "size": 24, "title": "Name: caissa_commitment_history\nType: ADLS delta table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#c0c0c0", "font": {"color": "#333333", "size": 10}, "id": "caissa.commitments.commitment_summary_incl_performance_investment_type", "label": "caissa.commitment...", "shape": "dot", "size": 48, "title": "Name: caissa.commitments.commitment_summary_incl_performance_investment_type\nType: Catalog processed table\nStatus: Normal"}, {"borderWidth": 2, "borderWidthSelected": 3, "chosen": {"node": true}, "color": "#2ecc71", "font": {"color": "#333333", "size": 10}, "id": "Private Equity Overview", "label": "Private Equity Ov...", "shape": "dot", "size": 48, "title": "Name: Private Equity Overview\nType: Tableau workbook\nStatus: Normal"}]);
+                  edges = new vis.DataSet([{"arrows": "to", "color": "#ff6666", "from": "caissa_commitment_summary", "to": "caissa.commitments.commitment_summary_raw", "width": 2}, {"arrows": "to", "color": "#848484", "from": "caissa.commitments.commitments_summary_investment_type_fund_info", "to": "Private Equity Overview", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa.commitments.performance_overview_l1_investmenttype_l2_raw", "to": "caissa.commitments.performance_overview_l1_investmenttype_l2_clean", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa.commitments.commitment_history_raw", "to": "caissa.commitments.commitment_history_clean", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa.commitments.accounting_history_raw", "to": "caissa.commitments.commitment_summary_investment_type_clean", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa.commitments.accounting_history_raw", "to": "caissa.commitments.commitment_summary_incl_performance_investment_type", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa.commitments.accounting_history_raw", "to": "caissa.commitments.commitment_summary_investment_type_incl_l1_weights", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa.commitments.commitment_summary_investment_type_incl_l1_weights", "to": "caissa.commitments.commitment_summary_investment_type_unpivot", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa.commitments.commitment_returns_raw", "to": "caissa.commitments.commitment_summary_incl_performance_investment_type", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa.commitments.fund_info_contributions_distributions_clean", "to": "Private Equity Overview", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa.commitments.non_commitment_summary_investment_type", "to": "caissa.commitments.non_commitment_summary_incl_performance_investment_type", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa.commitments.performance_overview_l1_investmenttype_l2_clean", "to": "caissa.commitments.non_commitment_summary_incl_performance_investment_type", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa.commitments.performance_overview_l1_investmenttype_l2_clean", "to": "caissa.commitments.commitment_summary_incl_performance_investment_type", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa.commitments.non_commitment_summary_incl_performance_investment_type", "to": "caissa.commitments.commitment_summary_investment_type_grouped", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa.commitments.commitment_summary_raw", "to": "caissa.commitments.commitment_summary_incl_performance_investment_type", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa.commitments.commitment_summary_raw", "to": "caissa.commitments.non_commitment_summary_investment_type", "width": 1}, {"arrows": "to", "color": "#848484", "from": "sharepoint.fund_info.private_equity", "to": "Private Equity Overview", "width": 1}, {"arrows": "to", "color": "#848484", "from": "sharepoint.fund_info.private_equity_unpivot", "to": "Private Equity Overview", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa.commitments.fund_info_irr_clean", "to": "Private Equity Overview", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa_performance_overview_l1_investmenttype_l2", "to": "caissa.commitments.performance_overview_l1_investmenttype_l2_raw", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa_commitment_returns", "to": "caissa.commitments.commitment_returns_raw", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa.commitments.commitments_raw", "to": "caissa.commitments.commitment_history_clean", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa.commitments.commitment_history_clean", "to": "caissa.commitments.fund_info_contributions_distributions_clean", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa_accounting_history", "to": "caissa.commitments.accounting_history_raw", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa_commitments", "to": "caissa.commitments.commitments_raw", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa.commitments.commitment_summary_totals_investment_type_raw", "to": "caissa.commitments.commitment_summary_incl_performance_investment_type", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa.commitments.commitment_summary_investment_type_unpivot", "to": "caissa.commitments.commitment_summary_investment_type_clean", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa.commitments.commitment_summary_investment_type_unpivot", "to": "caissa.commitments.commitments_summary_investment_type_fund_info", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa.commitments.fund_info_tvpi_dpi_rvpi_clean", "to": "Private Equity Overview", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa.commitments.portfolio_tree", "to": "caissa.commitments.non_commitment_summary_investment_type", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa.commitments.portfolio_tree", "to": "caissa.commitments.performance_overview_l1_investmenttype_l2_clean", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa.commitments.portfolio_tree", "to": "caissa.commitments.commitment_summary_incl_performance_investment_type", "width": 1}, {"arrows": "to", "color": "#ff6666", "from": "caissa_portfolio_holdings", "to": "caissa.commitments.portfolio_holdings_raw", "width": 2}, {"arrows": "to", "color": "#848484", "from": "caissa.commitments.portfolio_holdings_raw", "to": "caissa.commitments.non_commitment_summary_investment_type", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa.commitments.portfolio_holdings_raw", "to": "caissa.commitments.portfolio_tree", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa.commitments.commitment_summary_investment_type_grouped", "to": "caissa.commitments.fund_info_irr_clean", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa.commitments.commitment_summary_investment_type_grouped", "to": "caissa.commitments.commitment_summary_investment_type_incl_l1_weights", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa.commitments.commitment_summary_investment_type_grouped", "to": "caissa.commitments.fund_info_tvpi_dpi_rvpi_clean", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa_commitment_summary_totals_investment_type", "to": "caissa.commitments.commitment_summary_totals_investment_type_raw", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa.commitments.commitment_summary_investment_type_clean", "to": "caissa.commitments.commitments_summary_investment_type_fund_info", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa.commitments.commitment_summary_investment_type_clean", "to": "Private Equity Overview", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa_commitment_history", "to": "caissa.commitments.commitment_history_raw", "width": 1}, {"arrows": "to", "color": "#848484", "from": "caissa.commitments.commitment_summary_incl_performance_investment_type", "to": "caissa.commitments.commitment_summary_investment_type_grouped", "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {"layout": {"hierarchical": {"enabled": true, "levelSeparation": 350, "nodeSpacing": 200, "direction": "UD", "sortMethod": "directed"}}, "physics": {"enabled": true, "hierarchicalRepulsion": {"nodeDistance": 200, "springLength": 200}}, "interaction": {"hover": true, "tooltipDelay": 200}, "nodes": {"borderWidth": 2, "borderWidthSelected": 3}, "edges": {"arrows": {"to": {"enabled": true, "scaleFactor": 1.2}}, "color": {"color": "#848484", "highlight": "#2B7CE9"}}};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    
+        <div id="legend" style="
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 8px;
+            font-family: Arial, sans-serif;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 1000;
+            max-width: 220px;
+        ">
+            
+        <div style="font-weight: bold; font-size: 12px; margin-bottom: 8px; color: #555; border-bottom: 1px solid #ddd; padding-bottom: 5px;">
+            Daily Impact Analysis<br>
+            <span style="font-size: 10px; color: #777;">
+                2025-07-24 | Tableau: Private Equity Overview<br>
+                2 impacted nodes
+            </span>
+        </div>
+        
+            <div style="display: flex; align-items: center; margin: 2px 0; padding-bottom: 5px;"><div style="width: 12px; height: 12px; background-color: #ff4444; border-radius: 50%; margin-right: 6px; border: 2px solid #cc0000;"></div><span style="font-size: 11px; color: #333; font-weight: bold;">🚨 Impacted Node</span></div><div style="display: flex; align-items: center; margin: 2px 0;"><div style="width: 12px; height: 12px; background-color: #5dade2; border-radius: 50%; margin-right: 6px; border: 1px solid #ccc;"></div><span style="font-size: 11px; color: #333;">ADLS delta table</span></div><div style="display: flex; align-items: center; margin: 2px 0;"><div style="width: 12px; height: 12px; background-color: #c0c0c0; border-radius: 50%; margin-right: 6px; border: 1px solid #ccc;"></div><span style="font-size: 11px; color: #333;">Catalog processed table</span></div><div style="display: flex; align-items: center; margin: 2px 0;"><div style="width: 12px; height: 12px; background-color: #1F4270; border-radius: 50%; margin-right: 6px; border: 1px solid #ccc;"></div><span style="font-size: 11px; color: #333;">Catalog raw table</span></div><div style="display: flex; align-items: center; margin: 2px 0;"><div style="width: 12px; height: 12px; background-color: #2ecc71; border-radius: 50%; margin-right: 6px; border: 1px solid #ccc;"></div><span style="font-size: 11px; color: #333;">Tableau workbook</span></div>
+        </div>
+        
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                var networkContainer = document.getElementById('mynetworkid');
+                if (networkContainer && !document.getElementById('legend')) {
+                    var legend = document.createElement('div');
+                    legend.id = 'legend';
+                    legend.innerHTML = `
+        <div style="font-weight: bold; font-size: 12px; margin-bottom: 8px; color: #555; border-bottom: 1px solid #ddd; padding-bottom: 5px;">
+            Daily Impact Analysis<br>
+            <span style="font-size: 10px; color: #777;">
+                2025-07-24 | Tableau: Private Equity Overview<br>
+                2 impacted nodes
+            </span>
+        </div>
+        <div style="display: flex; align-items: center; margin: 2px 0; padding-bottom: 5px;"><div style="width: 12px; height: 12px; background-color: #ff4444; border-radius: 50%; margin-right: 6px; border: 2px solid #cc0000;"></div><span style="font-size: 11px; color: #333; font-weight: bold;">🚨 Impacted Node</span></div><div style="display: flex; align-items: center; margin: 2px 0;"><div style="width: 12px; height: 12px; background-color: #5dade2; border-radius: 50%; margin-right: 6px; border: 1px solid #ccc;"></div><span style="font-size: 11px; color: #333;">ADLS delta table</span></div><div style="display: flex; align-items: center; margin: 2px 0;"><div style="width: 12px; height: 12px; background-color: #c0c0c0; border-radius: 50%; margin-right: 6px; border: 1px solid #ccc;"></div><span style="font-size: 11px; color: #333;">Catalog processed table</span></div><div style="display: flex; align-items: center; margin: 2px 0;"><div style="width: 12px; height: 12px; background-color: #1F4270; border-radius: 50%; margin-right: 6px; border: 1px solid #ccc;"></div><span style="font-size: 11px; color: #333;">Catalog raw table</span></div><div style="display: flex; align-items: center; margin: 2px 0;"><div style="width: 12px; height: 12px; background-color: #2ecc71; border-radius: 50%; margin-right: 6px; border: 1px solid #ccc;"></div><span style="font-size: 11px; color: #333;">Tableau workbook</span></div>`;
+                    legend.style.cssText = `
+                        position: fixed;
+                        top: 10px;
+                        right: 10px;
+                        background: rgba(255, 255, 255, 0.95);
+                        border: 1px solid #ddd;
+                        border-radius: 5px;
+                        padding: 8px;
+                        font-family: Arial, sans-serif;
+                        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                        z-index: 1000;
+                        max-width: 220px;
+                    `;
+                    document.body.appendChild(legend);
+                }
+            }, 1000);
+        });
+        </script>
+        </body>
+</html>
