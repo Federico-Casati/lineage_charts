@@ -88,7 +88,7 @@
                   
 
                   // parsing and collecting nodes and edges from the python
-                  nodes = new vis.DataSet([{"color": "#f1c40f", "id": "Extract/File: liquidity_schedule (aah_report.default.liquidity_schedule) (default)", "label": "Extract/File: liquidity_schedule (aah_report.default.liquidity_schedule) (default)", "shape": "dot", "size": 18}, {"color": "#e74c3c", "id": "adb-1846968498773900.0.azuredatabricks.net.default.liquidity_schedule", "label": "adb-1846968498773900.0.azuredatabricks.net.default.liquidity_schedule", "shape": "dot", "size": 18}, {"color": "#2ecc71", "id": "Liquidity_Dashboard", "label": "Liquidity_Dashboard", "shape": "dot", "size": 21}]);
+                  nodes = new vis.DataSet([{"color": "#f1c40f", "font": {"color": "#333333", "size": 10}, "id": "Extract/File: liquidity_schedule (aah_report.default.liquidity_schedule) (default)", "label": "Extract/File: liq...", "shape": "dot", "size": 24, "title": "Name: Extract/File: liquidity_schedule (aah_report.default.liquidity_schedule) (default)\nType: Extract"}, {"color": "#e74c3c", "font": {"color": "#333333", "size": 10}, "id": "adb-1846968498773900.0.azuredatabricks.net.default.liquidity_schedule", "label": "adb-1846968498773...", "shape": "dot", "size": 24, "title": "Name: adb-1846968498773900.0.azuredatabricks.net.default.liquidity_schedule\nType: Processed Table"}, {"color": "#2ecc71", "font": {"color": "#333333", "size": 10}, "id": "Liquidity_Dashboard", "label": "Liquidity_Dashboard", "shape": "dot", "size": 28, "title": "Name: Liquidity_Dashboard\nType: Tableau Workbook"}]);
                   edges = new vis.DataSet([{"arrows": "to", "from": "Extract/File: liquidity_schedule (aah_report.default.liquidity_schedule) (default)", "to": "Liquidity_Dashboard"}, {"arrows": "to", "from": "adb-1846968498773900.0.azuredatabricks.net.default.liquidity_schedule", "to": "Liquidity_Dashboard"}]);
 
                   nodeColors = {};
@@ -100,7 +100,7 @@
                   // adding nodes and edges to the graph
                   data = {nodes: nodes, edges: edges};
 
-                  var options = {"layout": {"hierarchical": {"enabled": true, "levelSeparation": 300, "nodeSpacing": 150, "direction": "UD", "sortMethod": "directed"}}, "physics": {"enabled": true, "hierarchicalRepulsion": {"nodeDistance": 180}}, "interaction": {"hover": false, "tooltipDelay": 0, "tooltip": false}, "nodes": {"title": null}};
+                  var options = {"layout": {"hierarchical": {"enabled": true, "levelSeparation": 350, "nodeSpacing": 200, "direction": "UD", "sortMethod": "directed"}}, "physics": {"enabled": true, "hierarchicalRepulsion": {"nodeDistance": 200, "springLength": 200}}, "interaction": {"hover": true, "tooltipDelay": 200}, "nodes": {"borderWidth": 2, "borderWidthSelected": 3}, "edges": {"arrows": {"to": {"enabled": true, "scaleFactor": 1.2}}, "color": {"color": "#848484", "highlight": "#2B7CE9"}}};
 
                   
 
@@ -123,5 +123,53 @@
               }
               drawGraph();
         </script>
-    </body>
+    
+        <div id="legend" style="
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 8px;
+            font-family: Arial, sans-serif;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 1000;
+            max-width: 200px;
+        ">
+            <div style="font-weight: bold; font-size: 12px; margin-bottom: 5px; color: #555;">Node Types</div>
+            <div style="display: flex; align-items: center; margin: 2px 0;"><div style="width: 12px; height: 12px; background-color: #e74c3c; border-radius: 50%; margin-right: 6px; border: 1px solid #ccc;"></div><span style="font-size: 11px; color: #333;">Processed Table</span></div><div style="display: flex; align-items: center; margin: 2px 0;"><div style="width: 12px; height: 12px; background-color: #f1c40f; border-radius: 50%; margin-right: 6px; border: 1px solid #ccc;"></div><span style="font-size: 11px; color: #333;">Extract</span></div><div style="display: flex; align-items: center; margin: 2px 0;"><div style="width: 12px; height: 12px; background-color: #2ecc71; border-radius: 50%; margin-right: 6px; border: 1px solid #ccc;"></div><span style="font-size: 11px; color: #333;">Tableau Workbook</span></div>
+        </div>
+        
+        <script>
+        // Add legend after network is initialized
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                var networkContainer = document.getElementById('mynetworkid');
+                if (networkContainer && !document.getElementById('legend')) {
+                    var legend = document.createElement('div');
+                    legend.id = 'legend';
+                    legend.innerHTML = `
+                        <div style="font-weight: bold; font-size: 12px; margin-bottom: 5px; color: #555;">Node Types</div>
+                        <div style="display: flex; align-items: center; margin: 2px 0;"><div style="width: 12px; height: 12px; background-color: #e74c3c; border-radius: 50%; margin-right: 6px; border: 1px solid #ccc;"></div><span style="font-size: 11px; color: #333;">Processed Table</span></div><div style="display: flex; align-items: center; margin: 2px 0;"><div style="width: 12px; height: 12px; background-color: #f1c40f; border-radius: 50%; margin-right: 6px; border: 1px solid #ccc;"></div><span style="font-size: 11px; color: #333;">Extract</span></div><div style="display: flex; align-items: center; margin: 2px 0;"><div style="width: 12px; height: 12px; background-color: #2ecc71; border-radius: 50%; margin-right: 6px; border: 1px solid #ccc;"></div><span style="font-size: 11px; color: #333;">Tableau Workbook</span></div>
+                    `;
+                    legend.style.cssText = `
+                        position: fixed;
+                        top: 10px;
+                        right: 10px;
+                        background: rgba(255, 255, 255, 0.95);
+                        border: 1px solid #ddd;
+                        border-radius: 5px;
+                        padding: 8px;
+                        font-family: Arial, sans-serif;
+                        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                        z-index: 1000;
+                        max-width: 200px;
+                    `;
+                    document.body.appendChild(legend);
+                }
+            }, 1000);
+        });
+        </script>
+        </body>
 </html>
